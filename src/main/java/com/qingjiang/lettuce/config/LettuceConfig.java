@@ -18,4 +18,5 @@ public class LettuceConfig {
     public LettuceFactory defaultClient() {
         return new LettuceFactory("remote.default", RedisClient.class);
     }
+
 }
