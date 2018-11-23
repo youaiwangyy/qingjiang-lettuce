@@ -15,8 +15,11 @@ public class LettuceConfig {
 
     @Bean(name = "redisClient")
     @DependsOn(RedisLettuceAutoConfiguration.AUTO_INIT_BEAN_NAME)
-    public LettuceFactory defaultClient() {
+    public LettuceFactory redisClient() {
         return new LettuceFactory("remote.default", RedisClient.class);
     }
+
+
+
 
 }

@@ -1,19 +1,14 @@
 package com.qingjiang.lettuce.Service.user.impl;
 
-import com.alicp.jetcache.Cache;
-import com.alicp.jetcache.MultiGetResult;
-import com.alicp.jetcache.anno.CacheType;
-import com.alicp.jetcache.anno.CreateCache;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.qingjiang.lettuce.Service.user.UserService;
+import com.qingjiang.lettuce.cache.redis.CacheService;
 import com.qingjiang.lettuce.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * create by qingjiang.li on 2018/11/21
@@ -21,40 +16,34 @@ import java.util.Set;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @CreateCache(name = "user.", expire = 3000, localExpire = 3000, cacheType = CacheType.BOTH, localLimit = 50)
-    private Cache<Integer, User> userCache;
 
+
+    @Autowired private CacheService cacheService;
 
     @Override
     public boolean addUser(User... users) {
-        Map<Integer, User> userMap = Maps.newHashMap();
-        Arrays.stream(users).forEach(user -> {
-            userMap.put(user.getId(), user);
-        });
-        userCache.putAll(userMap);
+        //添加数据库
+        boolean add = true;//mock 添加数据库成功
+        //添加缓存
+        cacheService.addUser(users);
         return true;
     }
 
     @Override
     public User getUserById(int id) {
-        User user = userCache.get(id);
+        User user = cacheService.getUserById(id);
+        if (user == null) {
+            //从数据库查
+            //添加缓存
+        }
         return user;
     }
 
     @Override
-    public Map<Integer, User> getAll() {
-        Set<Integer> ids = Sets.newHashSet();
-        ids.add(100);
-        ids.add(101);
-        ids.add(102);
-        MultiGetResult<Integer, User> userMultiGetResult = userCache.GET_ALL(ids);
-        Map<Integer, User> userMap = userMultiGetResult.unwrapValues();
+    public Map<Integer, User> getUsers(Set<Integer> ids) {
+        Set<User> userSet = cacheService.getUsers(ids);
+        Map<Integer, User> userMap = userSet.stream().collect(Collectors.toMap(User::getId, user -> user));
         return userMap;
     }
 
-    @Override
-    public Map<Integer, User> getUsers(Set<Integer> ids) {
-        Map<Integer, User> users = userCache.getAll(ids);
-        return users;
-    }
 }

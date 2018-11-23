@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -59,9 +61,22 @@ public class RedisClientTest extends LettuceApplicationTests {
     public void testRedisClient() {
         StatefulRedisConnection<String, String> connect = redisClient.connect();
         RedisCommands<String, String> sync = connect.sync();
-        Long lpush = sync.lpush("users", "qingjiang");
+        Long lpush = sync.lpush("users", "kaka");
         log.info("lpush:{}", lpush);
 
+    }
+
+    @Test
+    public void testRedisClusterClient() {
+        //TODO
+        RedisURI redisURI = RedisURI.create("127.0.0.1", 7379);
+        RedisURI redisURI2 = RedisURI.create("127.0.0.1", 7380);
+        List<RedisURI> list = Arrays.asList(redisURI, redisURI2);
+        RedisClusterClient redisClusterClient = RedisClusterClient.create(list);
+        StatefulRedisClusterConnection<String, String> connect = redisClusterClient.connect();
+        RedisAdvancedClusterCommands<String, String> sync = connect.sync();
+        Long lpush = sync.lpush("users", "fafa");
+        log.info("lpush:{}", lpush);
     }
 
 }

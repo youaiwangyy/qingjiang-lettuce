@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
+import java.util.Set;
 
 @Slf4j
 public class UserServiceTest extends LettuceApplicationTests {
@@ -23,7 +24,11 @@ public class UserServiceTest extends LettuceApplicationTests {
 
     @Test
     public void getAll() {
-        Map<Integer, User> all = userService.getAll();
+        Set<Integer> ids = Sets.newHashSet();
+        ids.add(1001);
+        ids.add(1002);
+        ids.add(1003);
+        Map<Integer, User> all = userService.getUsers(ids);
         log.info("all:{}", all);
     }
 

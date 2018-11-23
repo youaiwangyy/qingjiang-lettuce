@@ -14,6 +14,8 @@ jetcache:
       keyConvertor: fastjson
       valueEncoder: java
       valueDecoder: java
+      defaultExpireInMillis: 20000
+      keyPrefix: lettuceClusterTest1
       poolConfig:
         minIdle: 5
         maxIdle: 20
