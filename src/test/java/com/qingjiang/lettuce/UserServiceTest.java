@@ -1,8 +1,8 @@
 package com.qingjiang.lettuce;
 
 import com.google.common.collect.Sets;
-import com.qingjiang.lettuce.Service.user.UserService;
 import com.qingjiang.lettuce.domain.User;
+import com.qingjiang.lettuce.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -22,3 +22,11 @@ jetcache:
         maxTotal: 50
       uri: redis://127.0.0.1:6379/
 
+
+
+#elasticsearch
+# Elasticsearch
+elasticsearch.cluster.name=elasticsearch
+elasticsearch.ip=127.0.0.1
+elasticsearch.port=9300
+elasticsearch.pool=5

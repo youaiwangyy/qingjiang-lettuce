@@ -1,4 +1,4 @@
-package com.qingjiang.lettuce.Service.user;
+package com.qingjiang.lettuce.service.user;
 
 import com.qingjiang.lettuce.domain.User;
 

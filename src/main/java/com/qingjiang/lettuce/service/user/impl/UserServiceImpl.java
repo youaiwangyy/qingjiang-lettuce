@@ -1,8 +1,8 @@
-package com.qingjiang.lettuce.Service.user.impl;
+package com.qingjiang.lettuce.service.user.impl;
 
-import com.qingjiang.lettuce.Service.user.UserService;
 import com.qingjiang.lettuce.cache.redis.CacheService;
 import com.qingjiang.lettuce.domain.User;
+import com.qingjiang.lettuce.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
